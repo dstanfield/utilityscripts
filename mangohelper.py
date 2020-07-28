@@ -2,9 +2,10 @@ import os
 import shutil
 import zipfile
 
-folder = r"C:\Users\dstan\Documents\testing\ziprenametesting"
+folder = input(r"Enter filepath : ")
 pgnum = 0
 zipex = ".zip"
+volumenumber = input("Enter volume number : ") 
 
 #change to directory with files
 os.chdir(folder) 
@@ -42,7 +43,7 @@ for sub in subfolders:
         shutil.copy(src, dst)
 
 #last step is to zip them all up, then change the filename from .zip to .cbz
-jaypeg = ".jpg"
+jaypeg = input("Enter image extension : ") 
 #gather all the images
 imgs = [f.path for f in os.scandir(folder) if f.path.endswith(jaypeg)]
 #create the zip object, could do it inside the loop with append mode
@@ -52,6 +53,8 @@ for i in imgs:
     zip_handler.write(os.path.join(folder, i))
 #gotta close the ziphandler object for the file to write
 zip_handler.close()
+#rename to cbz
+os.rename("volumeout.zip", "volume{}.cbz".format(volumenumber))
 
 
 
