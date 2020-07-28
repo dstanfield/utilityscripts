@@ -40,3 +40,21 @@ for sub in subfolders:
         pgnum += 1
         #copy over
         shutil.copy(src, dst)
+
+#last step is to zip them all up, then change the filename from .zip to .cbz
+jaypeg = ".jpg"
+#gather all the images
+imgs = [f.path for f in os.scandir(folder) if f.path.endswith(jaypeg)]
+#create the zip object, could do it inside the loop with append mode
+zip_handler = zipfile.ZipFile(folder + "\\volumeout.zip", "w")
+#loop through and add all the images
+for i in imgs:
+    zip_handler.write(os.path.join(folder, i))
+#gotta close the ziphandler object for the file to write
+zip_handler.close()
+
+
+
+
+
+    
