@@ -3,9 +3,6 @@ import shutil
 import zipfile
 
 folder = r"C:\Users\dstan\Documents\testing\ziprenametesting"
-#var equals scandir checks contents of folder and returns directories only as a list
-#this for loop pattern is basically variable equals result of the for loop, iterated
-
 pgnum = 0
 zipex = ".zip"
 
@@ -26,7 +23,9 @@ for item in os.listdir(folder):
         zip_ref.close() 
         #credit to https://stackoverflow.com/questions/58792626/extract-all-files-from-multiple-folders-with-python
         
-#has to be after extraction
+#var equals scandir checks contents of folder and returns directories only as a list
+#this for loop pattern is basically variable equals result of the for loop, iterated
+#has to be after extraction since there aren't directories until they're extracted
 subfolders = [f.path for f in os.scandir(folder) if f.is_dir()]
 
 #for folder in subfolder list
