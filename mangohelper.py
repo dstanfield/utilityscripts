@@ -2,10 +2,11 @@ import os
 import shutil
 import zipfile
 
-folder = input(r"Enter filepath : ")
 pgnum = 0
 zipex = ".zip"
 volumenumber = input("Enter volume number : ") 
+jaypeg = input("Enter image extension : ")
+folder = input("Enter filepath : ")
 
 #change to directory with files
 os.chdir(folder) 
@@ -43,7 +44,7 @@ for sub in subfolders:
         shutil.copy(src, dst)
 
 #last step is to zip them all up, then change the filename from .zip to .cbz
-jaypeg = input("Enter image extension : ") 
+ 
 #gather all the images
 imgs = [f.path for f in os.scandir(folder) if f.path.endswith(jaypeg)]
 #create the zip object, could do it inside the loop with append mode
