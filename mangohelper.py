@@ -1,12 +1,26 @@
 import os
 import shutil
 import zipfile
+from argparse import ArgumentParser
+from pathlib import Path
+
+# Invoke the script like the following:
+# python mangohelper.py --volume-number 7 --image-extension jpg --filepath ../path/to/my/mangoes/
+parser = ArgumentParser()
+parser.add_argument("--volume_number", metavar="volume-number", type=int, help="Volume Number of the manga")
+parser.add_argument("--image_extension", metavar="image-extension", choices=["jpg", "png"], help="Extension of the images in the archive")
+parser.add_argument("--filepath", type=Path, help="Path to directory containing the manga archive")
+args = parser.parse_args()
 
 pgnum = 0
 zipex = ".zip"
-volumenumber = input("Enter volume number : ") 
-jaypeg = input("Enter image extension : ")
-folder = input("Enter filepath : ")
+#volumenumber = input("Enter volume number : ") 
+#jaypeg = input("Enter image extension : ")
+#folder = input("Enter filepath : ")
+volumenumber = args.volume_number
+jaypeg = args.image_extension
+folder = args.filepath # folder here is a Path object - not a string! Line 12 turns the input into a path
+# You may need to change the lines below to work with Path objects. I'll leave that up to you ;) 
 
 #change to directory with files
 os.chdir(folder) 
