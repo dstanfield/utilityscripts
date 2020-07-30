@@ -2,25 +2,30 @@ import os
 import shutil
 import zipfile
 from argparse import ArgumentParser
-from pathlib import Path
+import pathlib
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 # Invoke the script like the following:
 # python mangohelper.py --volume-number 7 --image-extension jpg --filepath ../path/to/my/mangoes/
 parser = ArgumentParser()
-parser.add_argument("--volume_number", metavar="volume-number", type=int, help="Volume number of the mango")
-parser.add_argument("--image_extension", metavar="image-extension", choices=["jpg", "png"], help="Image extension of mangos")
-parser.add_argument("--filepath", type=Path, help="Filepath of folder containing mango chapters")
+parser.add_argument("--volume_number", metavar="volume_number", type=int, help="Volume number of the mango")
+parser.add_argument("--image_extension", metavar="image_extension", choices=["jpg", "png"], help="Image extension of mangos")
+parser.add_argument("--filepath", type=pathlib.WindowsPath, help="Filepath of folder containing mango chapters")
 args = parser.parse_args()
+
+# keeping these around in case I need them later
+# logging.debug("Looking for items in folder {}".format(str(args.volume_number)))
+# logging.debug("Looking for items in folder {}".format(str(args.image_extension)))
+# logging.debug("Looking for items in folder {}".format(str(args.filepath)))
 
 pgnum = 0
 zipex = ".zip"
-#volumenumber = input("Enter volume number : ") 
-#jaypeg = input("Enter image extension : ")
-#folder = input("Enter filepath : ")
 volumenumber = args.volume_number
-jaypeg = "." + args.image_extension
-folder = str(args.filepath) # folder here is a Path object - not a string! Line 12 turns the input into a path
-# You may need to change the lines below to work with Path objects. I'll leave that up to you ;) 
+#adding period here so the parser lines are less messy
+jaypeg = "." + str(args.image_extension)
+folder = str(args.filepath) 
 
 #change to directory with files
 os.chdir(folder) 
@@ -73,8 +78,8 @@ zip_handler.close()
 os.rename("volumeout.zip", "volume{}.cbz".format(volumenumber))
 
 #let's figure out if this works to delete all the objects created
-del subfolders
-del imgs
+# del subfolders
+# del imgs
 
 
 
