@@ -7,9 +7,9 @@ from pathlib import Path
 # Invoke the script like the following:
 # python mangohelper.py --volume-number 7 --image-extension jpg --filepath ../path/to/my/mangoes/
 parser = ArgumentParser()
-parser.add_argument("--volume_number", metavar="volume-number", type=int, help="Volume Number of the manga")
-parser.add_argument("--image_extension", metavar="image-extension", choices=["jpg", "png"], help="Extension of the images in the archive")
-parser.add_argument("--filepath", type=Path, help="Path to directory containing the manga archive")
+parser.add_argument("--volume_number", metavar="volume-number", type=int, help="Volume number of the mango")
+parser.add_argument("--image_extension", metavar="image-extension", choices=["jpg", "png"], help="Image extension of mangos")
+parser.add_argument("--filepath", type=Path, help="Filepath of folder containing mango chapters")
 args = parser.parse_args()
 
 pgnum = 0
@@ -18,8 +18,8 @@ zipex = ".zip"
 #jaypeg = input("Enter image extension : ")
 #folder = input("Enter filepath : ")
 volumenumber = args.volume_number
-jaypeg = args.image_extension
-folder = args.filepath # folder here is a Path object - not a string! Line 12 turns the input into a path
+jaypeg = "." + args.image_extension
+folder = str(args.filepath) # folder here is a Path object - not a string! Line 12 turns the input into a path
 # You may need to change the lines below to work with Path objects. I'll leave that up to you ;) 
 
 #change to directory with files
@@ -33,7 +33,7 @@ for item in os.listdir(folder):
         file_name = os.path.abspath(item) 
         #create a zipfile boi
         zip_ref = zipfile.ZipFile(file_name) 
-        #extract it to the proper folder
+        #extract that boi
         zip_ref.extractall(folder) 
         #close that boi
         zip_ref.close() 
@@ -57,7 +57,7 @@ for sub in subfolders:
         #copy over
         shutil.copy(src, dst)
 
-#last step is to zip them all up, then change the filename from .zip to .cbz
+#last step is to zip the images up, then change the filename from .zip to .cbz
  
 #gather all the images
 imgs = [f.path for f in os.scandir(folder) if f.path.endswith(jaypeg)]
@@ -68,8 +68,15 @@ for i in imgs:
     zip_handler.write(os.path.join(folder, i))
 #gotta close the ziphandler object for the file to write
 zip_handler.close()
+
 #rename to cbz
 os.rename("volumeout.zip", "volume{}.cbz".format(volumenumber))
+
+#let's figure out if this works to delete all the objects created
+del subfolders
+del imgs
+
+
 
 
 
