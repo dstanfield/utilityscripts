@@ -8,10 +8,10 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 # Invoke the script like the following:
-# python mangohelper.py --volume-number 7 --image-extension jpg --filepath ../path/to/my/mangoes/
+# python mangohelper.py --volume_number 7 --image_extension jpg --filepath ../path/to/my/mangoes/
 parser = ArgumentParser()
-parser.add_argument("--volume_number", metavar="volume_number", type=int, help="Volume number of the mango")
-parser.add_argument("--image_extension", metavar="image_extension", choices=["jpg", "png"], help="Image extension of mangos")
+parser.add_argument("--volume_number", type=int, help="Volume number of the mango")
+parser.add_argument("--image_extension", choices=["jpg", "png"], help="Image extension of mangos")
 parser.add_argument("--filepath", type=pathlib.WindowsPath, help="Filepath of folder containing mango chapters")
 args = parser.parse_args()
 
@@ -23,7 +23,7 @@ args = parser.parse_args()
 pgnum = 0
 zipex = ".zip"
 volumenumber = args.volume_number
-#adding period here so the parser lines are less messy
+#adding period here so the parser lines are cleaner
 jaypeg = "." + str(args.image_extension)
 folder = str(args.filepath) 
 
@@ -77,9 +77,13 @@ zip_handler.close()
 #rename to cbz
 os.rename("volumeout.zip", "volume{}.cbz".format(volumenumber))
 
-#let's figure out if this works to delete all the objects created
-# del subfolders
-# del imgs
+#delete all the objects created
+for imgfolders in subfolders:
+    shutil.rmtree(imgfolders)
+#not very good at variable naming
+for goaway in imgs:
+    os.remove(goaway)
+
 
 
 
