@@ -67,7 +67,7 @@ for sub in subfolders:
 #gather all the images
 imgs = [f.path for f in os.scandir(folder) if f.path.endswith(jaypeg)]
 #create the zip object, could do it inside the loop with append mode
-zip_handler = zipfile.ZipFile(folder + "\\volumeout.zip", "w")
+zip_handler = zipfile.ZipFile(folder + "\\volumeout{}.zip".format(volumenumber), "w")
 #loop through and add all the images
 for i in imgs:
     zip_handler.write(os.path.join(folder, i))
